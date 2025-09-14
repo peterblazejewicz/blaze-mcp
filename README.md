@@ -48,6 +48,31 @@ Add a new MCP server of type Command (stdio):
 
 Tip: Replace placeholders with your actual values or set them in .env.
 
+### How to connect from LM Studio (persistent server)
+
+- Preferred (URL): If your LM Studio build supports connecting to an MCP server by URL, run Blaze.MCP in persistent mode (HTTP+SSE) and point LM Studio at http://127.0.0.1:34344. Add header Authorization: Bearer {{BLAZE_MCP_TOKEN}}. See docs/adr/0001-blaze-mcp-integration-and-transport.md for details.
+
+  Example startup flags (subject to implementation):
+
+```powershell
+# persistent server on localhost:34344, token saved to %LOCALAPPDATA%/Blaze.MCP/token
+Blaze.MCP --mcp-sse-enabled=true --mcp-sse-port=34344 --mcp-sse-bind=127.0.0.1 --mcp-token-file="$env:LOCALAPPDATA/Blaze.MCP/token"
+```
+
+- Fallback (stdio proxy): If LM Studio only supports spawning a command, use the stdio proxy binary that bridges to the always-on service via a Windows Named Pipe (\\.\pipe\blaze-mcp) or TCP 127.0.0.1:34345.
+
+  Example mcp.json entry:
+
+```json
+{
+  "command": "blaze-mcp-proxy.exe",
+  "args": [],
+  "working_directory": "{{REPO_DIR}}"
+}
+```
+
+Note: Until persistent mode is enabled in this repo, continue using the Command (stdio) configuration above.
+
 ### LM Studio walkthrough (with screenshots)
 
 This walkthrough uses today's screenshots captured on your machine and shows the setup and tool usage flow in order.
@@ -176,7 +201,10 @@ require("conform").setup({
 - This repo is suitable as a minimal MCP server for experimentation with tools. Start by adding additional tools under Tools/*.cs with [McpServerTool] attributes.
 - For local LLMs (Ollama/LM Studio), point OPENAI_BASE_URL to the local OpenAI-compatible endpoint; your MCP tools can call those endpoints using HttpClient.
 
+## Architecture decisions
+
+- ADR 0001 — Blaze.MCP transport and integration strategy: docs/adr/0001-blaze-mcp-integration-and-transport.md
+
 ## License
 
 MIT © 2025 Piotr Błażejewicz
-
