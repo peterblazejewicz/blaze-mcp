@@ -1,0 +1,28 @@
+# Gitleaks configuration for Blaze.MCP
+# Redact findings by default, and allow common placeholders and local endpoints
+
+[extend]
+# You can extend from the default rules if installed with gitleaks repo; keep local for portability
+
+[redact]
+# Always redact secrets in output
+enabled = true
+
+[allowlist]
+# Ignore localhost endpoints and placeholder variables that appear in docs
+paths = [
+  ".gitleaks.toml"
+]
+regexes = [
+  "127\\.0\\.0\\.1(:[0-9]{2,5})?",
+  "localhost(:[0-9]{2,5})?",
+  '\{\{REPO_DIR\}\}',
+  '\{\{OPENAI_API_KEY\}\}',
+  '\{\{FOO_API_KEY\}\}',
+  '\$HOME',
+  "%USERPROFILE%"
+]
+
+# Optionally ignore binary files
+[rules]
+# Use built-in rules; we can define custom ones here later.

@@ -1,0 +1,11 @@
+@echo off
+setlocal
+set DOTNET_NOLOGO=1
+set DOTNET_CLI_TELEMETRY_OPTOUT=1
+
+dotnet restore
+
+set CONFIGURATION=%CONFIGURATION%
+if "%CONFIGURATION%"=="" set CONFIGURATION=Debug
+
+dotnet build -c %CONFIGURATION%

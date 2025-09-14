@@ -1,0 +1,12 @@
+{
+  "name": "Blaze.MCP",
+  "private": true,
+  "neovim": {
+    "lsp": {
+      "csharp": "omnisharp" 
+    },
+    "format": {
+      "csharp": "dotnet-format"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://modelcontextprotocol.io/schemas/draft/2025-07-09/server.json",
+  "description": "Blaze MCP server for learning Microsoft.Extensions.AI and MCP, usable by local MCP-capable clients.",
+  "name": "local/blaze-mcp",
+  "packages": [
+    {
+      "registry_name": "nuget",
+      "name": "Blaze.MCP",
+      "version": "0.1.0-beta",
+      "package_arguments": [],
+      "environment_variables": [
+        "OPENAI_API_KEY",
+        "OPENAI_BASE_URL",
+        "OLLAMA_HOST",
+        "LMSTUDIO_BASE_URL"
+      ]
+    }
+  ],
+  "repository": {
+    "url": "",
+    "source": "github"
+  },
+  "version_detail": {
+    "version": "0.1.0-beta"
+  }
+}
